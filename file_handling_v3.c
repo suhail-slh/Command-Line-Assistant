@@ -51,6 +51,7 @@ void play_music()
 	int choice;
 	
 	printf("Enter the path to the music directory(use '/' as separator): ");
+	scanf("\n");
 	scanf("%[^\n]%*c",path);
 	
 	d = opendir(path);
@@ -114,53 +115,61 @@ int main( )
       
     char s_path[STR_SIZE], d_path[STR_SIZE], action[4];
 	
-	printf("Enter the action to be performed: \n'r' -> read \n'a' -> append \n'w' -> overwrite \n'c' -> copy \n'm' -> move \n'd' -> delete \n'msc' -> play music \n\n");
-	scanf("%[^\n]%*c",action);
-	
-	if( strcmp(action, "msc") )
+	while(1)
 	{
-		printf("Enter the path of the file along with filename and extension(use '/' as separator): \n");	
-		scanf("%[^\n]%*c",s_path);
+		printf("Enter the action to be performed: \n'r' -> read \n'a' -> append \n'w' -> overwrite \n'c' -> copy \n'm' -> move \n'd' -> delete \n'msc' -> play music \n'q' -> quit \n\n");
+		scanf("\n");
+		scanf("%[^\n]%*c",action);
 		
-		if( strcmp(action,"d")==0 )
+		if( strcmp(action,"q") == 0 )
+			break;
+		
+		if( strcmp(action, "msc") )
 		{
-			if(remove(s_path))
-				printf("Path does not exist.\n");
-		}
-		else
-		{
-			if(strcmp(action,"c")==0 || strcmp(action,"m")==0)
-				sfp = fopen(s_path, "r");
-			else
-				sfp = fopen(s_path, action); 
-		  
-			if (sfp == NULL) 
-				printf("Path does not exist.\n"); 
+			printf("Enter the path of the file along with filename and extension(use '/' as separator): \n");	
+			scanf("\n");
+			scanf("%[^\n]%*c",s_path);
+			
+			if( strcmp(action,"d")==0 )
+			{
+				if(remove(s_path))
+					printf("Path does not exist.\n");
+			}
 			else
 			{
-				if(strcmp(action,"a")==0 || strcmp(action,"w")==0)
-					write_file(sfp,s_path);
-				else if(strcmp(action,"r")==0)
-					read_file(sfp);
-				else if(strcmp(action,"c")==0 || strcmp(action,"m")==0)
+				if(strcmp(action,"c")==0 || strcmp(action,"m")==0)
+					sfp = fopen(s_path, "r");
+				else
+					sfp = fopen(s_path, action); 
+			  
+				if (sfp == NULL) 
+					printf("Path does not exist.\n"); 
+				else
 				{
-					printf("Enter the destination of the file along with filename and extension(use '/' as separator): ");	
-					scanf("%[^\n]%*c",d_path);
-					dfp = fopen(d_path,"a");
-					if (dfp == NULL) 
-						printf("Path does not exist.\n");
-					else
+					if(strcmp(action,"a")==0 || strcmp(action,"w")==0)
+						write_file(sfp,s_path);
+					else if(strcmp(action,"r")==0)
+						read_file(sfp);
+					else if(strcmp(action,"c")==0 || strcmp(action,"m")==0)
 					{
-						copy(sfp,dfp);
-						if(strcmp(action,"m")==0)
-							remove(s_path);
+						printf("Enter the destination of the file along with filename and extension(use '/' as separator): ");	
+						scanf("\n");
+						scanf("%[^\n]%*c",d_path);
+						dfp = fopen(d_path,"a");
+						if (dfp == NULL) 
+							printf("Path does not exist.\n");
+						else
+						{
+							copy(sfp,dfp);
+							if(strcmp(action,"m")==0)
+								remove(s_path);
+						}
 					}
 				}
 			}
 		}
+		else
+			play_music();
 	}
-	else
-		play_music();
-
     return 0;         
 } 
