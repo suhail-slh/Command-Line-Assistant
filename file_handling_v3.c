@@ -77,7 +77,7 @@ void play_music()
 					if(path[strlen(path)-1] != '/')	strcat(cmd, "/");
 					strcat(cmd,dir->d_name);
 					strcat(cmd,"\"");
-					printf("%s\n",cmd);
+					printf("Currently Playing: %s\n",d_name);
 					system(cmd);
 					scanf("\n");
 					scanf("%c",&ch);
@@ -96,7 +96,7 @@ void play_music()
 			if(path[strlen(path)-1] != '/')	strcat(cmd, "/");
 			strcat(cmd,fnm);
 			strcat(cmd,"\"");
-			printf("%s\n",cmd);
+			printf("Currently Playing: %s\n",fnm);
 			system(cmd);
 			break;
 		default:
