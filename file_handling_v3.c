@@ -50,7 +50,7 @@ void play_music()
 	char ch, path[STR_SIZE], fnm[STR_SIZE] = "", cmd[STR_SIZE] = "\"";
 	int choice;
 	
-	printf("Enter the path to the music directory(use '/' as separator): ");
+	printf("Enter the path to the music directory(use '/' as separator): \n");
 	scanf("\n");
 	scanf("%[^\n]%*c",path);
 	
@@ -58,7 +58,7 @@ void play_music()
 	
 	if(d==NULL)
 	{
-		printf("Path does not exist."); 
+		printf("Path does not exist.\n"); 
 		return;
 	}
 	
@@ -94,7 +94,7 @@ void play_music()
 			}
 			break;
 		case 2:
-			printf("Enter the filename with extension: ");
+			printf("Enter the filename with extension: \n");
 			scanf("\n");
 			scanf("%[^\n]%*c",fnm);
 			strcat(cmd, path);
@@ -117,7 +117,7 @@ int main( )
 	
 	while(1)
 	{
-		printf("Enter the action to be performed: \n'r' -> read \n'a' -> append \n'w' -> overwrite \n'c' -> copy \n'm' -> move \n'd' -> delete \n'msc' -> play music \n'q' -> quit \n\n");
+		printf("\nEnter the action to be performed: \n'r' -> read \n'a' -> append \n'w' -> overwrite \n'c' -> copy \n'm' -> move \n'd' -> delete \n'msc' -> play music \n'q' -> quit \n\n");
 		scanf("\n");
 		scanf("%[^\n]%*c",action);
 		
@@ -152,7 +152,7 @@ int main( )
 						read_file(sfp);
 					else if(strcmp(action,"c")==0 || strcmp(action,"m")==0)
 					{
-						printf("Enter the destination of the file along with filename and extension(use '/' as separator): ");	
+						printf("Enter the destination of the file along with filename and extension(use '/' as separator): \n");	
 						scanf("\n");
 						scanf("%[^\n]%*c",d_path);
 						dfp = fopen(d_path,"a");
