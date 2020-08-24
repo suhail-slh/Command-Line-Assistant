@@ -87,6 +87,8 @@ void play_music()
 						if(ch == 'Q')
 							break;
 					}
+					if(ch == 'Q')
+						break;
 				}
 			}
 			break;
