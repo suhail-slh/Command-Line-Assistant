@@ -53,6 +53,7 @@ void play_music()
 	printf("Enter the path to the music directory(use '/' as separator): \n");
 	scanf("\n");
 	scanf("%[^\n]%*c",path);
+	printf("\n");
 	
 	d = opendir(path);
 	
@@ -64,11 +65,12 @@ void play_music()
 	
 	printf("Enter your choice: \n'1' -> Play All \n'2' -> Play File \n\n");
 	scanf("%d",&choice);
+	printf("\n");
 	
 	switch(choice)
 	{
 		case 1:
-			printf("Options: \n'N' -> Play Next \n'Q' -> quit \n");
+			printf("Options: \n'N' -> Play Next \n'Q' -> quit \n\n");
 			while( (dir = readdir(d)) != NULL )
 			{
 				if( strcmp(dir->d_name,".") && strcmp(dir->d_name,"..") && strcmp(dir->d_name,"desktop.ini") )
@@ -97,6 +99,7 @@ void play_music()
 			printf("Enter the filename with extension: \n");
 			scanf("\n");
 			scanf("%[^\n]%*c",fnm);
+			printf("\n");
 			strcat(cmd, path);
 			if(path[strlen(path)-1] != '/')	strcat(cmd, "/");
 			strcat(cmd,fnm);
@@ -120,6 +123,7 @@ int main( )
 		printf("\nEnter the action to be performed: \n'r' -> read \n'a' -> append \n'w' -> overwrite \n'c' -> copy \n'm' -> move \n'd' -> delete \n'msc' -> play music \n'q' -> quit \n\n");
 		scanf("\n");
 		scanf("%[^\n]%*c",action);
+		printf("\n");
 		
 		if( strcmp(action,"q") == 0 )
 			break;
@@ -129,6 +133,7 @@ int main( )
 			printf("Enter the path of the file along with filename and extension(use '/' as separator): \n");	
 			scanf("\n");
 			scanf("%[^\n]%*c",s_path);
+			printf("\n");
 			
 			if( strcmp(action,"d")==0 )
 			{
@@ -155,6 +160,7 @@ int main( )
 						printf("Enter the destination of the file along with filename and extension(use '/' as separator): \n");	
 						scanf("\n");
 						scanf("%[^\n]%*c",d_path);
+						printf("\n");
 						dfp = fopen(d_path,"a");
 						if (dfp == NULL) 
 							printf("Path does not exist.\n");
