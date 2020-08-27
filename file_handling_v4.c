@@ -117,12 +117,10 @@ void play_music()
 				printf("Next: %s\n\n",x->next->filename);
 				system(cmd);
 				ch = ' ';
-				while(ch != 'N' && ch != 'P')
+				while(ch != 'N' && ch != 'P' && ch != 'Q')
 				{
 					scanf("\n");
 					scanf("%c",&ch);
-					if(ch == 'Q')
-						break;
 				}
 				if(ch == 'Q')
 					break;
