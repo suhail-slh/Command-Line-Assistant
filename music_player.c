@@ -73,9 +73,13 @@ node* create_playlist(DIR *directory, int shuffle)
 		}
 	}
 	
-	tail = tail->prev;
-	tail->next = head;
-	head->prev = tail; 
+	if(ct>0)
+	{
+		tail = tail->prev;
+		free(tail->next);
+		tail->next = head;
+		head->prev = tail;
+	}
 	
 	if(shuffle == 1)
 	{
