@@ -51,6 +51,18 @@ void copy(FILE *sfp,FILE *dfp)
 	fclose(dfp);
 }
 
+int is_mp3(char *fn)
+{
+	char check[5];
+	int len = strlen(fn), i, j;
+	if(len >= 4)
+		for(i=len-4,j=0;i<len;i++)
+			check[j++] = fn[i];
+	if( strcmp(".mp3",check))
+		return 0;
+	return 1;
+}
+
 node* create_playlist(DIR *directory, int shuffle)
 {
 	struct dirent *dir_entry;
@@ -62,7 +74,7 @@ node* create_playlist(DIR *directory, int shuffle)
 		
 	while( (dir_entry = readdir(directory)) != NULL )
 	{
-		if( strcmp(dir_entry->d_name,".") && strcmp(dir_entry->d_name,"..") && strcmp(dir_entry->d_name,"desktop.ini") )
+		if( is_mp3(dir_entry->d_name) )
 		{
 			strcpy(tail->filename, dir_entry->d_name);
 			
