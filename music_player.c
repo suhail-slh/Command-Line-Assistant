@@ -2,8 +2,6 @@
 # include <string.h> 
 # include <windows.h>
 # include <dirent.h>
-# include <sys/stat.h>
-# include <unistd.h>
 # include <time.h>
 # define STR_SIZE 10000
 
@@ -26,7 +24,7 @@ void read_file(FILE *fp)
 void write_file(FILE *fp, char *path)
 {
 	char cmd[STR_SIZE]="notepad ", timestamp[STR_SIZE];
-	//replace "notepad " with "python editor_path " when editor is ready
+	//replace "notepad " with the text editor of your choice
 	
 	SYSTEMTIME t;
 				
@@ -38,7 +36,8 @@ void write_file(FILE *fp, char *path)
 	
 	fclose(fp);
 	
-	strcat(cmd, path);//the file path will be taken in as an argument(argv) in the python text editor
+	strcat(cmd, path);
+	//the file path will be taken in as an argument(argv) by the text editor
 
 	system(cmd);
 }
@@ -121,7 +120,7 @@ void play_music()
 	scanf("%[^\n]%*c",path);
 	printf("\n");
 	
-	for(int i=0;path[i]!='\0';i++)
+	for(int i=0;path[i]!='\0';i++)//to make sure the file path has '/' as separator
 		if(path[i] == '\\')
 			path[i] = '/';
 	
@@ -232,7 +231,7 @@ int main( )
 					scanf("%[^\n]%*c",s_path);
 					printf("\n");
 					
-					for(int i=0;s_path[i]!='\0';i++)
+					for(int i=0;s_path[i]!='\0';i++)//to make sure the file path has '/' as separator
 						if(s_path[i] == '\\')
 							s_path[i] = '/';
 						
@@ -274,7 +273,7 @@ int main( )
 									scanf("%[^\n]%*c",d_path);
 									printf("\n");
 									
-									for(int i=0;d_path[i]!='\0';i++)
+									for(int i=0;d_path[i]!='\0';i++)//to make sure the file path has '/' as separator
 										if(d_path[i] == '\\')
 											d_path[i] = '/';
 									
