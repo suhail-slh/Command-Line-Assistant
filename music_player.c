@@ -58,7 +58,7 @@ int is_mp3(char *fn)
 	if(len >= 4)
 		for(i=len-4,j=0;i<len;i++)
 			check[j++] = fn[i];
-	if( strcmp(".mp3",check))
+	if( strcmp(".mp3",check) )
 		return 0;
 	return 1;
 }
@@ -76,6 +76,8 @@ node* create_playlist(DIR *directory, int shuffle)
 	{
 		if( is_mp3(dir_entry->d_name) )
 		{
+			//printf("%s\n",dir_entry->d_name);
+			
 			strcpy(tail->filename, dir_entry->d_name);
 			
 			tail->next = (node*)malloc(sizeof(node));
@@ -85,13 +87,16 @@ node* create_playlist(DIR *directory, int shuffle)
 		}
 	}
 	
-	if(ct>0)
+	if(ct==0)
 	{
-		tail = tail->prev;
-		free(tail->next);
-		tail->next = head;
-		head->prev = tail;
+		free(head);
+		return NULL;
 	}
+	
+	tail = tail->prev;
+	free(tail->next);
+	tail->next = head;
+	head->prev = tail;
 	
 	if(shuffle == 1)
 	{
@@ -127,8 +132,8 @@ node* create_playlist(DIR *directory, int shuffle)
 void play_music()
 {
 	DIR *directory;
-	char ch, path[STR_SIZE], filename[STR_SIZE] = "", cmd[STR_SIZE] = "\"";
-	int choice, shuffle;
+	char ch, path[STR_SIZE], filename[STR_SIZE], cmd[STR_SIZE];
+	int choice, shuffle,i;
 	node *x,*y;
 	
 	printf("Enter the path to the music directory: \n");
@@ -136,9 +141,11 @@ void play_music()
 	scanf("%[^\n]%*c",path);
 	printf("\n");
 	
-	for(int i=0;path[i]!='\0';i++)//to make sure the file path has '/' as separator
+	for(i=0;path[i]!='\0';i++)
 		if(path[i] == '\\')
 			path[i] = '/';
+	if(path[i-1] != '/');
+		strcat(path, "/");
 	
 	directory = opendir(path);
 	
@@ -166,12 +173,18 @@ void play_music()
 			}
 			
 			x = create_playlist(directory, shuffle);
+			
+			if(x == NULL)
+			{
+				printf("Directory does not contain any mp3 files\n");
+				break;
+			}
+			
 			printf("Press: \n'n' to Play Next \n'p' to Play Previous \n'q' to Quit \n\n");
-			while( x != NULL )
+			while(1)
 			{
 				strcpy(cmd,"\"");
 				strcat(cmd, path);
-				if(path[strlen(path)-1] != '/')	strcat(cmd, "/");
 				strcat(cmd,x->filename);
 				strcat(cmd,"\"");
 				printf("Previous: %s\n",x->prev->filename);
@@ -203,8 +216,8 @@ void play_music()
 			scanf("\n");
 			scanf("%[^\n]%*c",filename);
 			printf("\n");
+			strcpy(cmd,"\"");
 			strcat(cmd, path);
-			if(path[strlen(path)-1] != '/')	strcat(cmd, "/");
 			strcat(cmd,filename);
 			strcat(cmd,"\"");
 			printf("Currently Playing: %s\n",filename);
@@ -222,7 +235,7 @@ int main( )
       
     char s_path[STR_SIZE], d_path[STR_SIZE];
 	
-	int action,action2;
+	int action,action2,i;
 	
 	srand(time(0));
 	
@@ -247,7 +260,7 @@ int main( )
 					scanf("%[^\n]%*c",s_path);
 					printf("\n");
 					
-					for(int i=0;s_path[i]!='\0';i++)//to make sure the file path has '/' as separator
+					for(i=0;s_path[i]!='\0';i++)//to make sure the file path has '/' as separator
 						if(s_path[i] == '\\')
 							s_path[i] = '/';
 						
@@ -289,7 +302,7 @@ int main( )
 									scanf("%[^\n]%*c",d_path);
 									printf("\n");
 									
-									for(int i=0;d_path[i]!='\0';i++)//to make sure the file path has '/' as separator
+									for(i=0;d_path[i]!='\0';i++)//to make sure the file path has '/' as separator
 										if(d_path[i] == '\\')
 											d_path[i] = '/';
 									
